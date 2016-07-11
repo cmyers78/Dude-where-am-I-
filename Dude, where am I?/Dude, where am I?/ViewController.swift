@@ -10,18 +10,37 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate  {
     
+    var locationManager = CLLocationManager()
     
     @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.requestWhenInUseAuthorization()
+        
     }
 
     
-
+    
+    
+    @IBAction func findLocation(sender: UIBarButtonItem) {
+        
+        
+    }
+    
+    
+    
+    @IBAction func pinMePressed(sender: UIBarButtonItem) {
+        
+        
+        
+    }
 
 }
 
