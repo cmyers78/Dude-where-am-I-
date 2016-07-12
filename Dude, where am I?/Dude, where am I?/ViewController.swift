@@ -14,13 +14,12 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     var locationManager = CLLocationManager()
     var currentLocation = CLLocation()
+    var locationDesc : String = ""
     
     @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -70,13 +69,12 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         print(error.localizedDescription)
     }
     
-    func addPin(pinLat : Double, pinLong : Double, title : String, subtitle : String) {
+    func addPin(pinLat : Double, pinLong : Double, title : String) {
         
         let location = CLLocationCoordinate2D(latitude: pinLat, longitude: pinLong)
         let annotation = MKPointAnnotation()
         annotation.coordinate = location
         annotation.title = title
-        annotation.subtitle = subtitle
         
         self.mapView.addAnnotation(annotation)
     }
@@ -87,7 +85,34 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
     
     @IBAction func pinMePressed(sender: UIBarButtonItem) {
-        self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: "Somewhere", subtitle: "my address is none of yo bidness")
+        
+        let alertController = UIAlertController(title: "Add Description", message: "Add a description for your location", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {  alert -> Void in
+            
+            let descTextField = alertController.textFields![0] as UITextField
+            
+            if let name = descTextField.text {
+                self.locationDesc = name
+            }
+
+            })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
+            (action : UIAlertAction!) -> Void in
+        })
+        
+        alertController.addTextFieldWithConfigurationHandler {(textField : UITextField!) -> Void in
+            textField.placeholder = "Enter Location Description"
+        }
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion:  nil)
+
+        
+        self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: self.locationDesc)
         
 //        let savedLat = NSUserDefaults.standardUserDefaults()
         
