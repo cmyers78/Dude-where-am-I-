@@ -13,6 +13,7 @@ import CoreLocation
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate  {
     
     var locationManager = CLLocationManager()
+    var currentLocation = CLLocation()
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -20,10 +21,14 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         super.viewDidLoad()
         
         
+        
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
         
+        if let findLoc = locationManager.location {
+            self.currentLocation = findLoc
+        }
         self.findLocation()
     }
 
@@ -84,7 +89,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     
     @IBAction func pinMePressed(sender: UIBarButtonItem) {
-        self.addPin(33.92653, pinLong: -83.60797, title: "Myers House", subtitle: "my address is none of yo bidness")
+        self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: "Somewhere", subtitle: "my address is none of yo bidness")
         
         
     }
