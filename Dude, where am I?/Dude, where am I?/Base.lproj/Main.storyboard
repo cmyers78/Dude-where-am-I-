@@ -35,7 +35,7 @@
                     <navigationItem key="navigationItem" id="QeY-Wu-rs8">
                         <barButtonItem key="leftBarButtonItem" image="CurrentLocation" id="Tae-VJ-4gG">
                             <connections>
-                                <action selector="findLocation:" destination="BYZ-38-t0r" id="25h-9t-WQ3"/>
+                                <action selector="updateLocation:" destination="BYZ-38-t0r" id="xBs-I4-iWc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="hed-b9-1tY">
