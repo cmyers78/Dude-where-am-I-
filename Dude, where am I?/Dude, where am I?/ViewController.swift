@@ -30,6 +30,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             self.currentLocation = findLoc
         }
         self.findLocation()
+//        self.loadPin()
     }
 
     
@@ -78,8 +79,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         annotation.subtitle = subtitle
         
         self.mapView.addAnnotation(annotation)
-        
-        
     }
     
     @IBAction func updateLocation(sender: UIBarButtonItem) {
@@ -87,12 +86,29 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         self.findLocation()
     }
     
-    
     @IBAction func pinMePressed(sender: UIBarButtonItem) {
         self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: "Somewhere", subtitle: "my address is none of yo bidness")
         
+        let savedLat = NSUserDefaults.standardUserDefaults()
+        
+        savedLat.setDouble(self.currentLocation.coordinate.latitude, forKey: kSELECTED_LATITUDE)
+        savedLat.synchronize()
+        
+        
+        let savedLong = NSUserDefaults.standardUserDefaults()
+        savedLong.setDouble(self.currentLocation.coordinate.longitude, forKey: kSELECTED_LONGITUDE)
+        savedLong.synchronize()
         
     }
+    
+//    func loadPin() {
+//        
+//        let latPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LATITUDE)
+//        
+//        let longPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LONGITUDE)
+//        
+//        self.addPin(latPin, pinLong: longPin, title: "Somewhere", subtitle: "my address is none yo bidness")
+//    }
 
 }
 
