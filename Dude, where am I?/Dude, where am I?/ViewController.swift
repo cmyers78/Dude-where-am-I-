@@ -29,7 +29,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             self.currentLocation = findLoc
         }
         self.findLocation()
-//        self.loadPin()
+        self.loadPin()
     }
 
     
@@ -77,6 +77,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         annotation.title = title
         
         self.mapView.addAnnotation(annotation)
+        
+        self.savePin()
     }
     
     @IBAction func updateLocation(sender: UIBarButtonItem) {
@@ -95,10 +97,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             if let name = descTextField.text {
                 self.locationDesc = name
             }
-            
-            self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: self.locationDesc)
-
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: self.locationDesc)
+                    
+                    })
             })
+        
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
             (action : UIAlertAction!) -> Void in
@@ -113,27 +118,38 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         self.presentViewController(alertController, animated: true, completion:  nil)
         
-        
-//        let savedLat = NSUserDefaults.standardUserDefaults()
-//        
-//        savedLat.setDouble(self.currentLocation.coordinate.latitude, forKey: kSELECTED_LATITUDE)
-//        savedLat.synchronize()
-//        
-//        
-//        let savedLong = NSUserDefaults.standardUserDefaults()
-//        savedLong.setDouble(self.currentLocation.coordinate.longitude, forKey: kSELECTED_LONGITUDE)
-//        savedLong.synchronize()
-        
     }
     
-//    func loadPin() {
-//        
-//        let latPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LATITUDE)
-//        
-//        let longPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LONGITUDE)
-//        
-//        self.addPin(latPin, pinLong: longPin, title: self.locationDesc)
-//    }
+    func savePin() {
+        
+                let savedLat = NSUserDefaults.standardUserDefaults()
+        
+                savedLat.setDouble(self.currentLocation.coordinate.latitude, forKey: kSELECTED_LATITUDE)
+        
+        
+        
+                let savedLong = NSUserDefaults.standardUserDefaults()
+                savedLong.setDouble(self.currentLocation.coordinate.longitude, forKey: kSELECTED_LONGITUDE)
+        
+        
+                let savedDescription = NSUserDefaults.standardUserDefaults()
+                savedDescription.setObject(self.locationDesc, forKey: kSELECTED_DESCRIPTION)
+        
+                savedDescription.synchronize()
+
+    }
+    
+    func loadPin() {
+        
+        let latPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LATITUDE)
+        
+        let longPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LONGITUDE)
+        
+        if let descPin = NSUserDefaults.standardUserDefaults().objectForKey(kSELECTED_DESCRIPTION) as? String {
+            
+            self.addPin(latPin, pinLong: longPin, title: descPin)
+        }
+    }
 
 }
 
