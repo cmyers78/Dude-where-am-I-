@@ -89,15 +89,15 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     @IBAction func pinMePressed(sender: UIBarButtonItem) {
         self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: "Somewhere", subtitle: "my address is none of yo bidness")
         
-        let savedLat = NSUserDefaults.standardUserDefaults()
+//        let savedLat = NSUserDefaults.standardUserDefaults()
         
-        savedLat.setDouble(self.currentLocation.coordinate.latitude, forKey: kSELECTED_LATITUDE)
-        savedLat.synchronize()
-        
-        
-        let savedLong = NSUserDefaults.standardUserDefaults()
-        savedLong.setDouble(self.currentLocation.coordinate.longitude, forKey: kSELECTED_LONGITUDE)
-        savedLong.synchronize()
+//        savedLat.setDouble(self.currentLocation.coordinate.latitude, forKey: kSELECTED_LATITUDE)
+//        savedLat.synchronize()
+//        
+//        
+//        let savedLong = NSUserDefaults.standardUserDefaults()
+//        savedLong.setDouble(self.currentLocation.coordinate.longitude, forKey: kSELECTED_LONGITUDE)
+//        savedLong.synchronize()
         
     }
     
