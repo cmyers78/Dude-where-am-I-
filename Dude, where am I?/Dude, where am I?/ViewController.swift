@@ -95,6 +95,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             if let name = descTextField.text {
                 self.locationDesc = name
             }
+            
+            self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: self.locationDesc)
 
             })
         
@@ -110,12 +112,10 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         alertController.addAction(cancelAction)
         
         self.presentViewController(alertController, animated: true, completion:  nil)
-
         
-        self.addPin(self.currentLocation.coordinate.latitude, pinLong: self.currentLocation.coordinate.longitude, title: self.locationDesc)
         
 //        let savedLat = NSUserDefaults.standardUserDefaults()
-        
+//        
 //        savedLat.setDouble(self.currentLocation.coordinate.latitude, forKey: kSELECTED_LATITUDE)
 //        savedLat.synchronize()
 //        
@@ -132,7 +132,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 //        
 //        let longPin = NSUserDefaults.standardUserDefaults().doubleForKey(kSELECTED_LONGITUDE)
 //        
-//        self.addPin(latPin, pinLong: longPin, title: "Somewhere", subtitle: "my address is none yo bidness")
+//        self.addPin(latPin, pinLong: longPin, title: self.locationDesc)
 //    }
 
 }
