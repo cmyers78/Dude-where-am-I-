@@ -28,7 +28,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
 
     
-    
     func findLocation() {
         
         let status = CLAuthorizationStatus.AuthorizedWhenInUse
@@ -65,6 +64,18 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         print(error.localizedDescription)
     }
     
+    func addPin(pinLat : Double, pinLong : Double, title : String, subtitle : String) {
+        
+        let location = CLLocationCoordinate2D(latitude: pinLat, longitude: pinLong)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        annotation.title = title
+        annotation.subtitle = subtitle
+        
+        self.mapView.addAnnotation(annotation)
+        
+        
+    }
     
     @IBAction func updateLocation(sender: UIBarButtonItem) {
         
@@ -73,7 +84,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     
     @IBAction func pinMePressed(sender: UIBarButtonItem) {
-        
+        self.addPin(33.92653, pinLong: -83.60797, title: "Myers House", subtitle: "my address is none of yo bidness")
         
         
     }
